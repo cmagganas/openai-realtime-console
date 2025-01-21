@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import logo from "/assets/openai-logomark.svg";
 import EventLog from "./EventLog";
 import SessionControls from "./SessionControls";
-import ToolPanel from "./ToolPanel";
+import LanguageToolPanel from "./LanguageToolPanel";
 
 export default function App() {
   const [isSessionActive, setIsSessionActive] = useState(false);
@@ -148,9 +148,8 @@ export default function App() {
           </section>
         </section>
         <section className="absolute top-0 w-[380px] right-0 bottom-0 p-4 pt-0 overflow-y-auto">
-          <ToolPanel
+          <LanguageToolPanel
             sendClientEvent={sendClientEvent}
-            sendTextMessage={sendTextMessage}
             events={events}
             isSessionActive={isSessionActive}
           />
