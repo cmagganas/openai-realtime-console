@@ -5,6 +5,7 @@ This is an example application showing how to use the [OpenAI Realtime API](http
 ## Installation and Usage
 
 ### Prerequisites
+
 - Node.js
 - Python 3.12+
 - OpenAI API key
@@ -13,6 +14,7 @@ This is an example application showing how to use the [OpenAI Realtime API](http
 ### Environment Setup
 
 1. Create and configure your environment:
+
    ```bash
    cp .env.example .env
    python -m venv arcade_env
@@ -20,6 +22,7 @@ This is an example application showing how to use the [OpenAI Realtime API](http
    ```
 
 2. Add the following to your `.env`:
+
    ```bash
    OPENAI_API_KEY=your_openai_key
    ARCADE_API_KEY=your_arcade_key
@@ -27,6 +30,7 @@ This is an example application showing how to use the [OpenAI Realtime API](http
    ```
 
 3. Install dependencies:
+
    ```bash
    npm install
    pip install -r requirements.txt
@@ -44,15 +48,16 @@ chmod +x start-servers.sh # Make script executable (Unix only)
 Or start servers manually:
 
 Terminal 1: Start FastAPI server
+
 ```bash
 python -m uvicorn arcade_bridge:app --reload --port 8000
 ```
+
 Terminal 2: Start Node.js server
 
 ```bash
 npm run dev
 ```
-
 
 The application will be available at [http://localhost:3000](http://localhost:3000).
 
