@@ -1,0 +1,12 @@
+[project]
+name = "arcade-bridge"
+version = "0.1.0"
+description = "Bridge between OpenAI Realtime Console and Arcade AI"
+requires-python = ">=3.12"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

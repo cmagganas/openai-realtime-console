@@ -1,4 +1,7 @@
 {
+  "name": "openai-realtime-console",
+  "version": "0.1.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "node server.js --dev",
@@ -14,9 +17,12 @@
     "@fastify/one-line-logger": "^1.2.0",
     "@fastify/react": "^0.6.0",
     "@fastify/vite": "^6.0.5",
+    "arcade-core": "^0.3.0",
     "fastify": "^4.24.3",
     "history": "^5.3.0",
+    "marked": "^15.0.6",
     "minipass": "^7.0.4",
+    "openai": "^4.80.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
@@ -32,5 +38,8 @@
     "postcss-preset-env": "^7.7.1",
     "tailwindcss": "^3.4.1",
     "vite": "^5.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

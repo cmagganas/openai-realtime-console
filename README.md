@@ -1,35 +1,83 @@
-# OpenAI Realtime Console
+# OpenAI Realtime Console with Arcade Integration
 
-This is an example application showing how to use the [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) with [WebRTC](https://platform.openai.com/docs/guides/realtime-webrtc).
+This is an example application showing how to use the [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime) with [WebRTC](https://platform.openai.com/docs/guides/realtime-webrtc) and [Arcade AI](https://arcade.software/).
 
-## Installation and usage
+## Installation and Usage
 
-Before you begin, you'll need an OpenAI API key - [create one in the dashboard here](https://platform.openai.com/settings/api-keys). Create a `.env` file from the example file and set your API key in there:
+### Prerequisites
+- Node.js
+- Python 3.12+
+- OpenAI API key
+- Arcade API key and registered email
+
+### Environment Setup
+
+1. Create and configure your environment:
+   ```bash
+   cp .env.example .env
+   python -m venv arcade_env
+   source arcade_env/bin/activate # or arcade_env\Scripts\activate on Windows
+   ```
+
+2. Add the following to your `.env`:
+   ```bash
+   OPENAI_API_KEY=your_openai_key
+   ARCADE_API_KEY=your_arcade_key
+   ARCADE_EMAIL=your_email
+   ```
+
+3. Install dependencies:
+   ```bash
+   npm install
+   pip install -r requirements.txt
+   ```
+
+### Starting the Application
+
+Use the provided start script:
 
 ```bash
-cp .env.example .env
+chmod +x start-servers.sh # Make script executable (Unix only)
+./start-servers.sh
 ```
 
-Running this application locally requires [Node.js](https://nodejs.org/) to be installed. Install dependencies for the application with:
+Or start servers manually:
 
+Terminal 1: Start FastAPI server
 ```bash
-npm install
+python -m uvicorn arcade_bridge:app --reload --port 8000
 ```
-
-Start the application server with:
+Terminal 2: Start Node.js server
 
 ```bash
 npm run dev
 ```
 
-This should start the console application on [http://localhost:3000](http://localhost:3000).
 
-_Note:_ The `server.js` file uses [@fastify/vite](https://fastify-vite.dev/) to build and serve the Astro frontend contained in the `/client` folder. You can find the configuration in the [`vite.config.js` file](./vite.config.js)
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-## Previous WebSockets version
+## Features
 
-The previous version of this application that used WebSockets on the client (not recommended in client-side browsers) [can be found here](https://github.com/openai/openai-realtime-console/tree/websockets).
+- Real-time voice conversations with GPT-4
+- Arcade AI integration for:
+  - Spotify search and music discovery
+  - Image generation
+  - Additional AI tools
 
-## License
+## Usage
 
-MIT
+1. Click "Start Session" to begin
+2. Use voice or text to interact
+3. When music-related queries are made, Arcade tools will automatically:
+   - Search Spotify
+   - Display results in the right panel
+   - Provide clickable links to songs/artists
+
+## Architecture
+
+- Frontend: React + Vite
+- Backend: Fastify + FastAPI
+- Real-time: WebRTC
+- AI Tools: Arcade API
+
+_Note:_ The `server.js` file uses [@fastify/vite](https://fastify-vite.dev/) to build and serve the frontend.

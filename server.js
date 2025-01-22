@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import FastifyVite from "@fastify/vite";
 import fastifyEnv from "@fastify/env";
+import OpenAI from "openai";
 
 // Fastify + React + Vite configuration
 const server = Fastify({
@@ -13,11 +14,17 @@ const server = Fastify({
 
 const schema = {
   type: "object",
-  required: ["OPENAI_API_KEY"],
+  required: ["OPENAI_API_KEY", "ARCADE_API_KEY", "ARCADE_EMAIL"],
   properties: {
     OPENAI_API_KEY: {
       type: "string",
     },
+    ARCADE_API_KEY: {
+      type: "string",
+    },
+    ARCADE_EMAIL: {
+      type: "string",
+    }
   },
 };
 
@@ -50,6 +57,41 @@ server.get("/token", async () => {
       "Content-Type": "application/json",
     },
   });
+});
+
+server.post("/arcade", async (request, reply) => {
+  console.log("Arcade request body:", request.body);
+  try {
+    console.log("Received arcade request:", request.body);
+    
+    const response = await fetch("http://127.0.0.1:8000/process", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: request.body.messages[request.body.messages.length - 1].content,
+        user_id: process.env.ARCADE_EMAIL
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Arcade API error:", errorData);
+      throw new Error(errorData.detail?.message || 'Failed to process with Arcade');
+    }
+    
+    const data = await response.json();
+    console.log("Arcade API full response:", data);
+    return data;
+  } catch (error) {
+    console.error("Detailed error:", error);
+    reply.code(500).send({
+      error: error.message,
+      stack: error.stack,
+      detail: "Failed to process request with Arcade API"
+    });
+  }
 });
 
 await server.listen({ port: process.env.PORT || 3000 });
